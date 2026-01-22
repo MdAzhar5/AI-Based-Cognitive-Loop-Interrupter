@@ -1,15 +1,20 @@
-from langchain_community.vectorstores import Chroma
-from langchain.embeddings import OllamaEmbeddings
+from langchain import PromptTemplate, LLMChain
+from langchain.llms import Ollama
 
-
-_embeddings = OllamaEmbeddings(model="nomic-embed-text")
-
-
-
-
-def get_user_store(user_id: str):
-return Chroma(
-collection_name=f"user_{user_id}",
-embedding_function=_embeddings,
-persist_directory="./chroma_db",
+SUMMARY_PROMPT = PromptTemplate(
+    input_variables=["session_text"],
+    template=(
+        "Summarize the following session into a short cognitive memory. "
+        "Focus on recurring thoughts, emotions, and coping attempts.\n"
+        "Session:\n{session_text}"
+    ),
 )
+
+
+class MemorySummarizer:
+    def __init__(self, model: str):
+        self.llm = Ollama(model=model)
+        self.chain = LLMChain(llm=self.llm, prompt=SUMMARY_PROMPT)
+
+    def summarize(self, session_text: str) -> str:
+        return self.chain.run(session_text=session_text)
