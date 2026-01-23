@@ -4,3 +4,5 @@ langchain-ollama
 streamlit
 langchain-chroma
 langchain-text-splitters
+langchain-community
+
