@@ -2,11 +2,11 @@ import os
 from pathlib import Path
 from typing import List
 
-from langchain_community.document_loaders import PyPDFLoader
+from langchain.load_pdfs import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 
-from langchain_community.embeddings import OllamaEmbeddings
+from langchain_ollama.embeddings import OllamaEmbeddings
 
 EMBEDDINGS = OllamaEmbeddings(model="nomic-embed-text")
 

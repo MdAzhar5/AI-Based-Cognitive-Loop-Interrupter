@@ -3,3 +3,4 @@ langchain-core
 langchain-ollama
 streamlit
 langchain-chroma
+langchain-text-splitters
