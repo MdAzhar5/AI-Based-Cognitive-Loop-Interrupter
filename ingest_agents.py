@@ -56,7 +56,7 @@ def ingest_agent_docs(agent_name: str, folder_path: str, vectordb: Chroma):
         })
 
     vectordb.add_documents(chunks)
-    print(f"✅ Added {len(chunks)} chunks for {agent_name}")
+    print(f"Added {len(chunks)} chunks for {agent_name}")
 
 
 def main():
