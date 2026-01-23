@@ -1,22 +1,19 @@
-import hashlib
-import uuid
-from typing import Optional
+from langchain_core.runnables import RunnableLambda
+from memory.chroma_store import get_user_store
 
 
-def normalize_identifier(identifier: str) -> str:
-    return identifier.strip().lower()
 
 
-def hash_identifier(identifier: str) -> str:
-    normalized = normalize_identifier(identifier)
-    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
+def memory_retriever():
+    def _retrieve(input):
+        store = get_user_store(input["user_id"])
+        docs = store.similarity_search(input["input"], k=3)
+        return "\n".join([d.page_content for d in docs])
+    return RunnableLambda(_retrieve)
 
-
-def get_or_create_user_id(identifier: Optional[str] = None) -> str:
-    """
-    If identifier provided (email / phone / username) → hashed ID
-    Else → auto-generate UUID for new user
-    """
-    if identifier:
-        return hash_identifier(identifier)
-    return str(uuid.uuid4())
+def memory_writer():
+    def _write(input):
+        store = get_user_store(input["user_id"])
+        store.add_texts([input["summary"]])
+        return input
+    return RunnableLambda(_write)

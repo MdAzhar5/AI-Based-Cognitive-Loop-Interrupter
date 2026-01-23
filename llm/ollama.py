@@ -1,5 +1,5 @@
-from langchain_community.llms import Ollama
+from langchain_ollama import ChatOllama
 
 
 def get_llm():
-    return Ollama(model="llama3")
+    return ChatOllama(model="gpt-oss:20b-cloud")
