@@ -98,7 +98,7 @@
       const Leader2Linkedin = leader2?.querySelector?.("a[href*='linkedin.com']")?.href || "";
 
       return {
-        CompanyName, Summary, Founded, Location, CompanySize, Website,
+        CompanyName, Founded, Location, CompanySize, Website,
         Linkedin, Twitter, Crunchbase, FundingStage,
         Leader1Name, Leader1Title, Leader1Linkedin,
         Leader2Name, Leader2Title, Leader2Linkedin
@@ -141,8 +141,7 @@
         JobTitle: jobTitle,
         JobCompanyName: text("//h2//span"),
         Country: text("//span[contains(text(),'United')]"),
-        JobType: text("//span[contains(text(),'Remote')]"),
-        JobDescription: text("//main")
+        JobType: text("//span[contains(text(),'Remote')]")
       };
 
       // COMPANY DATA
